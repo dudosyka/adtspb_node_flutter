@@ -1,5 +1,5 @@
 import 'package:adtspb/screens/auth/components/auth_body.dart';
-import 'package:adtspb/screens/auth/components/nav_bottom.dart';
+import 'package:adtspb/components/nav_bottom.dart';
 import 'package:flutter/material.dart';
 
 class AuthScreen extends StatelessWidget {
