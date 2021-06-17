@@ -21,11 +21,6 @@ class Authorization {
     Object data = {
       "token": token,
     };
-    api.request(query, data).then((Stream? stream) {
-      stream!.listen((event) {
-        // log(event);
-      });
-    });
   }
 
   auth() async {
@@ -39,7 +34,6 @@ class Authorization {
     Map res = await api.request(query, data, "login");
     if (res["data"] != null) {
       this.storage.token = res["data"]["token"];
-      log(this.storage.token!);
       return true;
     } else {
       return false;

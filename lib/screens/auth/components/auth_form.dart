@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:adtspb/modules/Authorization.dart';
 import 'package:adtspb/screens/home/home_screen.dart';
 import 'package:flutter/material.dart';
@@ -33,6 +35,7 @@ class AuthForm extends StatelessWidget {
               onChanged: (value) {
                 this.login = value;
               },
+              keyboardType: TextInputType.emailAddress,
               decoration: InputDecoration(
                 hintText: "Введите номер телефона или email",
                 hintStyle: TextStyle(
@@ -51,8 +54,12 @@ class AuthForm extends StatelessWidget {
             ),
             child: TextField(
               onChanged: (value) {
+                log(value);
                 this.password = value;
               },
+              obscureText: true,
+              keyboardType: TextInputType.visiblePassword,
+              obscuringCharacter: "*",
               decoration: InputDecoration(
                 hintText: "Пароль",
                 hintStyle: TextStyle(

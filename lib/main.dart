@@ -12,6 +12,8 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
+  final MyLocalStorage storage = new MyLocalStorage();
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -21,7 +23,16 @@ class MyApp extends StatelessWidget {
           textTheme: Theme.of(context).textTheme.apply(bodyColor: kTextColor),
           scaffoldBackgroundColor: kBackgroundColor,
         ),
-        home: checkAuthorization(),
+        home: FutureBuilder(
+          future: this.storage.storage.ready,
+          builder: (context, snapshot) {
+            if (snapshot.data == true) {
+              log(storage.token ?? "TOKEN NULL");
+              if (storage.token != null) return HomeScreen();
+            }
+            return AuthScreen();
+          },
+        ),
         routes: <String, WidgetBuilder>{
           '/home': (BuildContext context) => HomeScreen(),
           '/login': (BuildContext context) => AuthScreen()
