@@ -2,7 +2,10 @@ import 'dart:developer';
 
 import 'package:adtspb/modules/LocalStorage.dart';
 import 'package:adtspb/screens/auth/auth_screen.dart';
+import 'package:adtspb/screens/child/child_screen.dart';
 import 'package:adtspb/screens/home/home_screen.dart';
+import 'package:adtspb/screens/proposal/proposal_screen.dart';
+import 'package:adtspb/screens/timetable/timetable_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'constants.dart';
@@ -27,7 +30,6 @@ class MyApp extends StatelessWidget {
           future: this.storage.storage.ready,
           builder: (context, snapshot) {
             if (snapshot.data == true) {
-              log(storage.token ?? "TOKEN NULL");
               if (storage.token != null) return HomeScreen();
             }
             return AuthScreen();
@@ -35,14 +37,10 @@ class MyApp extends StatelessWidget {
         ),
         routes: <String, WidgetBuilder>{
           '/home': (BuildContext context) => HomeScreen(),
-          '/login': (BuildContext context) => AuthScreen()
+          '/login': (BuildContextcontext) => AuthScreen(),
+          '/child': (BuildContext context) => ChildScreen(),
+          '/proposal': (BuildContext context) => ProposalScreen(),
+          '/timetable': (BuildContext context) => TimetableScreen(),
         });
   }
-}
-
-Widget checkAuthorization() {
-  MyLocalStorage storage = new MyLocalStorage();
-  log(storage.token ?? "");
-  if (storage.token == null) return AuthScreen();
-  return HomeScreen();
 }
