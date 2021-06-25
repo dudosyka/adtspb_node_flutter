@@ -17,7 +17,7 @@ class SideMenu extends StatelessWidget {
           ListTile(
             title: Text('Мой профиль'),
             subtitle: Text('Управление вашими личными данными'),
-            trailing: Icon(
+            leading: Icon(
               Icons.person,
             ),
             onTap: () {
@@ -28,7 +28,7 @@ class SideMenu extends StatelessWidget {
           ListTile(
             title: Text('Мои дети'),
             subtitle: Text('Управление данными ваших детей'),
-            trailing: Icon(Icons.child_care),
+            leading: Icon(Icons.child_care),
             onTap: () {
               Navigator.of(context).pop();
               Navigator.of(context).pushNamed("/child");
@@ -37,7 +37,7 @@ class SideMenu extends StatelessWidget {
           ListTile(
             title: Text('Мои заявления'),
             subtitle: Text('Отслеживание статусов ваших заявлений'),
-            trailing: Icon(
+            leading: Icon(
               Icons.document_scanner,
             ),
             onTap: () {
@@ -48,7 +48,7 @@ class SideMenu extends StatelessWidget {
           ListTile(
             title: Text('Расписание занятий'),
             subtitle: Text('Ваше личное расписание занятий'),
-            trailing: Icon(
+            leading: Icon(
               Icons.calendar_today,
             ),
             onTap: () {
@@ -59,7 +59,7 @@ class SideMenu extends StatelessWidget {
           ListTile(
             title: Text('Выход'),
             subtitle: Text('Выход из аккаунта'),
-            trailing: Icon(
+            leading: Icon(
               Icons.logout,
             ),
             onTap: () {

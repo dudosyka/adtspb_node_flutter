@@ -1,5 +1,7 @@
 import 'package:adtspb/components/SideMenu.dart';
 import 'package:adtspb/components/nav_bottom.dart';
+import 'package:adtspb/providers/ChildScreenProvider.dart';
+import 'package:adtspb/screens/child/components/child_screen_body.dart';
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
@@ -15,7 +17,10 @@ class ChildScreen extends StatelessWidget {
       ),
       drawer: SideMenu(),
       bottomNavigationBar: NavBottom(),
-      body: Text("Мои дети"),
+      body: ChangeNotifierProvider<ChildScreenProvider>(
+        create: (context) => ChildScreenProvider(),
+        child: ChildScreenBody(),
+      ),
     );
   }
 }

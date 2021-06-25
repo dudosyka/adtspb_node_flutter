@@ -13,6 +13,6 @@ abstract class Api {
   }
 
   get httpRequest {
-    return this.httpClient.post("192.168.1.62", 8080, this.route);
+    return this.httpClient.post("192.168.12.68", 8080, this.route);
   }
 }

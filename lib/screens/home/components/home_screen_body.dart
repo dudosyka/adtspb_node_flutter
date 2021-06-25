@@ -18,7 +18,8 @@ class HomeScreenBody extends StatelessWidget {
           future: value.viewerData,
           builder: (context, snapshot) {
             dynamic userData = snapshot.data;
-            if (snapshot.connectionState == ConnectionState.done) {
+            if (snapshot.connectionState == ConnectionState.done &&
+                userData != null) {
               return Container(
                 alignment: Alignment.center,
                 child: Column(

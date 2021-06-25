@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
         ),
         routes: <String, WidgetBuilder>{
           '/home': (BuildContext context) => HomeScreen(),
-          '/login': (BuildContextcontext) => AuthScreen(),
+          '/login': (BuildContext context) => AuthScreen(),
           '/child': (BuildContext context) => ChildScreen(),
           '/proposal': (BuildContext context) => ProposalScreen(),
           '/timetable': (BuildContext context) => TimetableScreen(),
