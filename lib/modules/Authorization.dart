@@ -31,7 +31,7 @@ class Authorization {
       "login": login,
       "password": password,
     };
-    Map res = await api.request(query, data, "login");
+    Map res = await api.request(query, data, "login", null);
     if (res["data"] != null) {
       this.storage.token = res["data"]["token"];
       return true;

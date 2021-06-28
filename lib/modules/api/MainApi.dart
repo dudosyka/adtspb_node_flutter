@@ -13,20 +13,11 @@ class MainApi extends Api {
     this.token = storage.getToken()!;
   }
 
-  Future<Map> request(String query, Object data, String name) async {
-    Map body = {"query": "$query", "variables": data};
-    HttpClientRequest request = await this.httpRequest;
-    request.headers.add('content-type', 'application/json');
-    request.headers.add('Authorization', "Bearer " + this.token);
-    request.add(utf8.encode(json.encode(body)));
-    HttpClientResponse response = await request.close();
-    late Map reply;
-    if (response.statusCode == 200) {
-      reply = json.decode(await response.transform(utf8.decoder).join());
-      reply["data"] = reply["data"][name];
-      reply["errors"] = reply["errors"] ?? {};
-    } else
-      reply = {"data": null, "errors": "request failed"};
-    return reply;
+  Future<Map> request(String query, Object data, String name,
+      [Map<String, String>? headers]) async {
+    dynamic authHeader = {"Authorization": "Bearer " + this.token};
+    if (headers == null) return super.request(query, data, name, authHeader);
+    headers.addAll(authHeader);
+    return super.request(query, data, name, headers);
   }
 }
