@@ -11,12 +11,13 @@ class ChildScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.blueGrey[100],
       appBar: AppBar(
         elevation: 0,
         title: Text("Мои дети"),
       ),
       drawer: SideMenu(),
-      bottomNavigationBar: NavBottom(),
+      // bottomNavigationBar: NavBottom(),
       body: ChangeNotifierProvider<ChildScreenProvider>(
         create: (context) => ChildScreenProvider(),
         child: ChildScreenBody(),

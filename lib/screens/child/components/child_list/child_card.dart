@@ -1,6 +1,8 @@
 import 'dart:developer';
 
+import 'package:adtspb/components/DateField.dart';
 import 'package:adtspb/components/ExpandedSection.dart';
+import 'package:adtspb/components/UserDataField.dart';
 import 'package:adtspb/constants.dart';
 import 'package:flutter/material.dart';
 
@@ -39,74 +41,79 @@ class ChildCardState extends State<ChildCard>
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Container(
-          height: 70,
-          decoration: BoxDecoration(
-            color: kPrimaryColor,
-            borderRadius: BorderRadius.all(
-              Radius.circular(kDefaultPadding / 1.3),
+        GestureDetector(
+          onTap: () {
+            this._toggleExpanded();
+          },
+          child: Container(
+            height: 70,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(
+                Radius.circular(kDefaultPadding / 1.3),
+              ),
+              boxShadow: [
+                BoxShadow(
+                  offset: Offset(0, 0),
+                  blurRadius: 7,
+                  color: kPrimaryColor.withOpacity(0.43),
+                ),
+              ],
             ),
-            boxShadow: [
-              BoxShadow(
-                offset: Offset(0, 0),
-                blurRadius: 7,
-                color: kPrimaryColor.withOpacity(0.73),
-              ),
-            ],
-          ),
-          margin: EdgeInsets.only(
-            bottom: kDefaultPadding * 0.8,
-          ),
-          padding: EdgeInsets.all(kDefaultPadding * 0.6),
-          child: Row(
-            children: <Widget>[
-              Container(
-                child: Icon(
-                  Icons.child_care,
-                  color: Colors.white,
+            margin: EdgeInsets.only(
+              bottom: kDefaultPadding * 0.8,
+            ),
+            padding: EdgeInsets.all(kDefaultPadding * 0.6),
+            child: Row(
+              children: <Widget>[
+                Container(
+                  child: Icon(
+                    Icons.child_care,
+                    color: kPrimaryColor,
+                  ),
+                  margin: EdgeInsets.only(
+                    right: kDefaultPadding * 0.8,
+                  ),
                 ),
-                margin: EdgeInsets.only(
-                  right: kDefaultPadding * 0.8,
+                Text(
+                  childData['surname'] + " " + childData['name'],
+                  style: TextStyle(
+                    color: kPrimaryColor,
+                    fontWeight: FontWeight.bold,
+                    fontSize: kDefaultPadding * 0.8,
+                  ),
                 ),
-              ),
-              Text(
-                childData['surname'] + " " + childData['name'],
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: kDefaultPadding * 0.8,
-                ),
-              ),
-              Spacer(),
-              IconButton(
-                icon: AnimatedSwitcher(
-                  duration: Duration(milliseconds: 500),
-                  child: expandedIcon,
-                  transitionBuilder: (child, animation) {
-                    return RotationTransition(
-                      child: child,
-                      turns: animation,
-                    );
+                Spacer(),
+                IconButton(
+                  icon: AnimatedSwitcher(
+                    duration: Duration(milliseconds: 500),
+                    child: expandedIcon,
+                    transitionBuilder: (child, animation) {
+                      return RotationTransition(
+                        child: child,
+                        turns: animation,
+                      );
+                    },
+                  ),
+                  color: kPrimaryColor,
+                  onPressed: () {
+                    this._toggleExpanded();
                   },
                 ),
-                color: Colors.white,
-                onPressed: () {
-                  this._toggleExpanded();
-                },
-              ),
-            ],
+              ],
+            ),
           ),
         ),
         ExpandedSection(
           expand: this.expanded,
           child: Container(
-            alignment: Alignment.center,
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.all(
                 Radius.circular(kDefaultPadding / 1.3),
               ),
             ),
+            alignment: Alignment.center,
             padding: EdgeInsets.all(kDefaultPadding),
             margin: EdgeInsets.only(
               bottom: kDefaultPadding,
@@ -123,85 +130,31 @@ class ChildCardState extends State<ChildCard>
                   name: "name",
                   size: this.size,
                 ),
+                UserDataField(
+                  child: this.childData,
+                  name: "lastname",
+                  size: this.size,
+                ),
+                UserDataField(
+                  child: this.childData,
+                  name: "phone",
+                  size: this.size,
+                ),
+                UserDataField(
+                  child: this.childData,
+                  name: "email",
+                  size: this.size,
+                ),
+                DateField(
+                  child: this.childData,
+                  name: "birthday",
+                  size: this.size,
+                ),
               ],
             ),
           ),
         ),
       ],
-    );
-  }
-}
-
-// ignore: must_be_immutable
-class UserDataField extends StatefulWidget {
-  dynamic child;
-  String name;
-  Size size;
-
-  UserDataField({
-    required this.child,
-    required this.name,
-    required this.size,
-  });
-
-  @override
-  UserDataFieldState createState() =>
-      UserDataFieldState(this.child, this.name, this.size);
-}
-
-class UserDataFieldState extends State<UserDataField> {
-  TextEditingController _controller = TextEditingController();
-  dynamic child;
-  String name;
-  Size size;
-
-  UserDataFieldState(this.child, this.name, this.size) {
-    this._unset();
-  }
-
-  void _unset() {
-    log(this.child[this.name]);
-    _controller.value = TextEditingValue(text: this.child[this.name]);
-  }
-
-  void _updateData() {
-    this.child[this.name] = _controller.value.text;
-    this.child["_provider"].updateChild(this.child);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: size.width * 0.8,
-      decoration: BoxDecoration(
-        color: Colors.white,
-      ),
-      child: Row(children: [
-        Expanded(
-          flex: 12,
-          child: TextField(
-            controller: _controller,
-          ),
-        ),
-        Expanded(
-          child: IconButton(
-            onPressed: _updateData,
-            icon: Icon(
-              Icons.done,
-              color: Colors.green,
-            ),
-          ),
-        ),
-        Expanded(
-          child: IconButton(
-            onPressed: _unset,
-            icon: Icon(
-              Icons.delete,
-              color: Colors.red,
-            ),
-          ),
-        ),
-      ]),
     );
   }
 }
