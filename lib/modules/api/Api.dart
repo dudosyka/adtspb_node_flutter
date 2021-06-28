@@ -23,10 +23,12 @@ abstract class Api {
       [Map<String, String>? headers]) async {
     Map body = {"query": "$query", "variables": data};
     HttpClientRequest request = await this.httpRequest;
-    headers!.keys.forEach((name) {
-      String el = headers[name]!;
-      request.headers.add(name, el);
-    });
+    if (headers != null) {
+      headers.keys.forEach((name) {
+        String el = headers[name]!;
+        request.headers.add(name, el);
+      });
+    }
     request.headers.add('content-type', 'application/json');
     request.add(utf8.encode(json.encode(body)));
     HttpClientResponse response = await request.close();
