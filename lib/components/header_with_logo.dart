@@ -16,7 +16,7 @@ class HeaderWithLogo extends StatelessWidget {
         bottom: kDefaultPadding,
         top: kDefaultPadding,
       ),
-      height: size!.height * 0.18 - 27,
+      height: size!.height * 0.18 + 1,
       width: size!.width,
       decoration: BoxDecoration(
         color: kPrimaryColor,

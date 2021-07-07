@@ -3,44 +3,54 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 
-class UserDataField extends StatefulWidget {
-  dynamic child;
+class TextDataField extends StatefulWidget {
+  dynamic user;
   String name;
   Size size;
   dynamic onTap;
+  String label;
 
-  UserDataField({
-    required this.child,
+  TextDataField({
+    required this.user,
     required this.name,
     required this.size,
+    required this.label,
     this.onTap,
   });
 
   @override
-  UserDataFieldState createState() =>
-      UserDataFieldState(this.child, this.name, this.size, this.onTap);
+  TextDataFieldState createState() => TextDataFieldState(
+      this.user, this.name, this.size, this.label, this.onTap);
 }
 
-class UserDataFieldState extends State<UserDataField> {
+class TextDataFieldState extends State<TextDataField> {
   TextEditingController _controller = TextEditingController();
-  dynamic child;
+  dynamic user;
   dynamic onTap;
   String name;
+  String label;
   Size size;
+  int maxLines = 1;
 
-  UserDataFieldState(this.child, this.name, this.size, this.onTap) {
-    this.unset();
+  TextDataFieldState(this.user, this.name, this.size, this.label, this.onTap) {
+    this.unset(setMaxLines: false);
+    this.maxLines = (this.user[this.name].toString().length / 31).ceil();
+    log((this.user[this.name].toString().length / 31).toString());
+    log(maxLines.toString());
   }
 
-  void unset() {
+  void unset({bool setMaxLines = true}) {
     // log(this.child[this.name].toString());
-    _controller.value =
-        TextEditingValue(text: this.child[this.name].toString());
+    if (setMaxLines) {
+      setState(() {
+        this.maxLines = (this.user[this.name].toString().length / 31).round();
+      });
+    }
+    _controller.value = TextEditingValue(text: this.user[this.name].toString());
   }
 
   void updateData() {
-    this.child[this.name] = _controller.value.text;
-    this.child["_provider"].updateChild(this.child);
+    this.user[this.name] = _controller.value.text;
   }
 
   @override
@@ -54,8 +64,12 @@ class UserDataFieldState extends State<UserDataField> {
         Expanded(
           flex: 12,
           child: TextField(
+            decoration: InputDecoration(
+              labelText: this.label,
+            ),
             controller: _controller,
             onTap: this.onTap,
+            maxLines: this.maxLines.toInt(),
           ),
         ),
         Expanded(

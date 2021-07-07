@@ -1,8 +1,9 @@
 import 'dart:developer';
 
 import 'package:adtspb/components/DateField.dart';
+import 'package:adtspb/components/DropDownField.dart';
 import 'package:adtspb/components/ExpandedSection.dart';
-import 'package:adtspb/components/UserDataField.dart';
+import 'package:adtspb/components/TextDataField.dart';
 import 'package:adtspb/constants.dart';
 import 'package:flutter/material.dart';
 
@@ -120,36 +121,95 @@ class ChildCardState extends State<ChildCard>
             ),
             child: Column(
               children: [
-                UserDataField(
-                  child: this.childData,
+                TextDataField(
+                  user: this.childData,
                   name: "surname",
                   size: this.size,
+                  label: "Фамилия",
                 ),
-                UserDataField(
-                  child: this.childData,
+                TextDataField(
+                  user: this.childData,
                   name: "name",
                   size: this.size,
+                  label: "Имя",
                 ),
-                UserDataField(
-                  child: this.childData,
+                TextDataField(
+                  user: this.childData,
                   name: "lastname",
                   size: this.size,
+                  label: "Отчество",
                 ),
-                UserDataField(
-                  child: this.childData,
+                TextDataField(
+                  user: this.childData,
                   name: "phone",
                   size: this.size,
+                  label: "Телефон",
                 ),
-                UserDataField(
-                  child: this.childData,
+                TextDataField(
+                  user: this.childData,
                   name: "email",
                   size: this.size,
+                  label: "Email",
                 ),
                 DateField(
-                  child: this.childData,
+                  user: this.childData,
                   name: "birthday",
                   size: this.size,
+                  label: "Дата рождения",
                 ),
+                TextDataField(
+                  user: this.childData,
+                  name: "state",
+                  size: this.size,
+                  label: "Гражданство",
+                ),
+                TextDataField(
+                  user: this.childData,
+                  name: "studyPlace",
+                  size: this.size,
+                  label: "Место обучения",
+                ),
+                TextDataField(
+                  user: this.childData,
+                  name: "residence_address",
+                  size: this.size,
+                  label: "Адрес проживания",
+                ),
+                TextDataField(
+                  user: this.childData,
+                  name: "registration_address",
+                  size: this.size,
+                  label: "Адрес регистрации",
+                ),
+                DropDownField(
+                  user: this.childData,
+                  name: "sex",
+                  size: size,
+                  label: "Пол",
+                  items: {"М": 1, "Ж": 0},
+                ),
+                TextButton(
+                  onPressed: () {
+                    this.childData["_provider"].updateChild(this.childData);
+                  },
+                  child: Container(
+                    margin: EdgeInsets.only(
+                      top: kDefaultPadding * 0.5,
+                    ),
+                    padding: EdgeInsets.all(kDefaultPadding * 0.5),
+                    decoration: BoxDecoration(
+                        color: kPrimaryColor,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(kDefaultPadding),
+                        )),
+                    child: Text(
+                      "Отправить на редактирование",
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                )
               ],
             ),
           ),

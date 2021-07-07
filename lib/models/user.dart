@@ -13,9 +13,10 @@ class UserModel extends Model {
 
   Future<Object?> getChildren() async {
     String query =
-        " query { getChildren {id, name, surname, lastname, phone, email, birthday, ovz, ovz_type { id }, disability, disability_group { id } } }";
+        " query { getChildren {id, name, surname, lastname, phone, email, sex, birthday, state, studyPlace, residence_address, registration_address, ovz, ovz_type { id }, disability, disability_group { id } } }";
     Object data = {};
     dynamic res = await this.api.request(query, data, 'getChildren');
+    // log(res['data'].toString());
     return res["data"];
   }
 
@@ -33,8 +34,8 @@ class UserModel extends Model {
       if (el.runtimeType.toString() ==
           "_InternalLinkedHashMap<String, dynamic>") {
         el.keys.forEach((subindex) {
-          dynamic subel = el[subindex];
-          value.addAll({subindex: subel});
+          dynamic subEl = el[subindex];
+          value.addAll({subindex: subEl});
         });
         childData.addAll({index: value});
       } else {
