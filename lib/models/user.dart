@@ -62,4 +62,16 @@ class UserModel extends Model {
     //Send request on update
     return true;
   }
+
+  void deleteChild({id, reason = "NS", removeAccount: false}) async {
+    String req =
+        "mutation (\$id: Int, \$reason: String, \$remove: Boolean) { user { removeChild (child_id: \$id, removeAccount: \$remove, comment: \$reason) } }";
+    dynamic data = {
+      "id": int.parse(id.toString()),
+      "reason": reason,
+      "remove": removeAccount,
+    };
+    dynamic res = await this.api.request(req, data, 'user');
+    log(res.toString());
+  }
 }

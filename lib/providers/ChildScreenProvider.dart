@@ -30,6 +30,9 @@ class ChildScreenProvider extends ChangeNotifier {
       this.userModel.updateMainData(child['dataOnEdit']['main']);
     if (child['dataOnEdit']['extra'].length > 1)
       this.userModel.updateExtraData(child['dataOnEdit']['extra']);
-    this.notifyListeners();
+  }
+
+  void deleteChild(child) {
+    this.userModel.deleteChild(id: child['id']);
   }
 }

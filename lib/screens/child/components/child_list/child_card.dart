@@ -3,6 +3,8 @@ import 'dart:developer';
 import 'package:adtspb/components/DateField.dart';
 import 'package:adtspb/components/DropDownField.dart';
 import 'package:adtspb/components/ExpandedSection.dart';
+import 'package:adtspb/components/RoundedTextBtn.dart';
+import 'package:adtspb/components/SnackBarNotification.dart';
 import 'package:adtspb/components/TextDataField.dart';
 import 'package:adtspb/constants.dart';
 import 'package:flutter/material.dart';
@@ -199,28 +201,39 @@ class ChildCardState extends State<ChildCard>
                   label: "Пол",
                   items: {"М": 1, "Ж": 0},
                 ),
-                TextButton(
-                  onPressed: () {
-                    this.childData["_provider"].updateChild(this.childData);
-                  },
-                  child: Container(
-                    margin: EdgeInsets.only(
-                      top: kDefaultPadding * 0.5,
+                Row(
+                  children: [
+                    RoundedTextBtn(
+                      onPressed: () async {
+                        await this
+                            .childData["_provider"]
+                            .updateChild(this.childData);
+                        SnackBarNotification notify = new SnackBarNotification(
+                          actionText: "Ok",
+                          notificationText: "Данные успешно отправлены!",
+                          context: this.context,
+                          size: this.size,
+                        );
+                        notify.buildNotification();
+                      },
+                      text: "Отправить на редактирование",
                     ),
-                    padding: EdgeInsets.all(kDefaultPadding * 0.5),
-                    decoration: BoxDecoration(
-                        color: kPrimaryColor,
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(kDefaultPadding),
-                        )),
-                    child: Text(
-                      "Отправить на редактирование",
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
+                    RoundedTextBtn(
+                      onPressed: () {
+                        this.childData["_provider"].deleteChild(this.childData);
+                        SnackBarNotification notify = new SnackBarNotification(
+                          actionText: "Ok",
+                          notificationText: "Запрос на удаление отправлен!",
+                          context: this.context,
+                          size: this.size,
+                        );
+                        notify.buildNotification();
+                      },
+                      text: "Удалить",
+                      type: RoundedTextBtnType.danger,
                     ),
-                  ),
-                )
+                  ],
+                ),
               ],
             ),
           ),
