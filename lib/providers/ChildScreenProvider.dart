@@ -12,7 +12,6 @@ class ChildScreenProvider extends ChangeNotifier {
 
   Future<Object?> get children async {
     if (_children.length == 0) {
-      log(true.toString());
       this._children = await userModel.getChildren();
     }
     return this._children;

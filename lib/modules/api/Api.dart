@@ -47,7 +47,6 @@ abstract class Api {
       reply["errors"] = reply["errors"] ?? {};
     } else {
       reply = json.decode(await response.transform(utf8.decoder).join());
-      log(reply.toString());
       reply = {"data": null, "errors": "request failed"};
     }
     return reply;

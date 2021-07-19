@@ -15,7 +15,6 @@ class Authorization {
 
   checkToken() {
     String? token = this.storage.getToken();
-    log(token!);
     MainApi api = new MainApi();
     String query = "query(\$token: String) { validToken(token: \$token) }";
     Object data = {

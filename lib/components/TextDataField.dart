@@ -39,8 +39,6 @@ class TextDataFieldState extends State<TextDataField> {
       this.user, this.group, this.name, this.size, this.label, this.onTap) {
     this.unset(setMaxLines: false);
     this.maxLines = (this.user[this.name].toString().length / 31).ceil();
-    log((this.user[this.name].toString().length / 31).toString());
-    log(maxLines.toString());
   }
 
   void setMaxLines() {
@@ -51,7 +49,6 @@ class TextDataFieldState extends State<TextDataField> {
   }
 
   void unset({bool setMaxLines = true}) {
-    // log(this.child[this.name].toString());
     if (setMaxLines) {
       this.setMaxLines();
     }

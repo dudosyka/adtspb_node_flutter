@@ -57,7 +57,6 @@ class DateFieldState extends State<DateField> {
     String year = dateTime.year.toString();
     String month = dateTime.month.toString();
     String day = dateTime.day.toString();
-    log(year + "-" + month + "-" + day);
     return year + "-" + month + "-" + day;
   }
 
@@ -73,7 +72,6 @@ class DateFieldState extends State<DateField> {
   }
 
   void unset() {
-    log(this.user[this.name].toString());
     log(
       this.buildDateFromDateTime(
         DateTime.fromMillisecondsSinceEpoch(

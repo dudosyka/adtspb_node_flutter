@@ -28,14 +28,12 @@ class UserModel extends Model {
   }
 
   Future<bool> updateChild(Map child, String dataType) async {
-    log(child.toString());
     int id = int.parse(child['id']);
     Map<String, dynamic> childData = {};
 
     child.keys.forEach((index) {
       if (index == "id") return;
       dynamic el = child[index];
-      log(el.runtimeType.toString());
       if (index == '_index' || index == '_provider') return;
 
       Map<String, dynamic> value = {};
@@ -51,8 +49,6 @@ class UserModel extends Model {
       }
     });
 
-    log("erer");
-    log(childData.toString());
     if (childData.length <= 0) return true;
 
     String query = "mutation (\$data: UserInput, \$target_id: Int) {user {" +
@@ -64,7 +60,6 @@ class UserModel extends Model {
     };
     dynamic res = await this.api.request(query, data, "user");
     //Send request on update
-    log(res.toString());
     return true;
   }
 }

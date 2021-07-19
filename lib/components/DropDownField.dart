@@ -45,14 +45,11 @@ class DropDownFieldState extends State<DropDownField> {
   List<DropdownMenuItem<int>> dropdownItems() {
     List<DropdownMenuItem<int>> itemsList = [];
     this.items.forEach((String key, int value) {
-      log(value.toString());
-      log(key);
       itemsList.add(DropdownMenuItem<int>(
         value: value,
         child: Text(key),
       ));
     });
-    log(itemsList.toString());
     return itemsList;
   }
 
