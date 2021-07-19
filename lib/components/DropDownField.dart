@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 class DropDownField extends StatefulWidget {
   dynamic user;
+  String group;
   String name;
   Size size;
   dynamic onTap;
@@ -13,6 +14,7 @@ class DropDownField extends StatefulWidget {
 
   DropDownField({
     required this.user,
+    required this.group,
     required this.name,
     required this.size,
     required this.label,
@@ -21,21 +23,22 @@ class DropDownField extends StatefulWidget {
   });
 
   @override
-  DropDownFieldState createState() => DropDownFieldState(
-      this.user, this.name, this.size, this.label, this.onTap, this.items);
+  DropDownFieldState createState() => DropDownFieldState(this.user, this.group,
+      this.name, this.size, this.label, this.onTap, this.items);
 }
 
 class DropDownFieldState extends State<DropDownField> {
   dynamic user;
-  dynamic onTap;
+  String group;
   String name;
   String label;
   Map<String, int> items;
   Size size;
   int? value;
+  dynamic onTap;
 
-  DropDownFieldState(
-      this.user, this.name, this.size, this.label, this.onTap, this.items) {
+  DropDownFieldState(this.user, this.group, this.name, this.size, this.label,
+      this.onTap, this.items) {
     this.unset();
   }
 
@@ -55,9 +58,20 @@ class DropDownFieldState extends State<DropDownField> {
 
   void unset() {
     this.value = int.parse(this.user[this.name].toString());
+    this.setEditData(false);
+  }
+
+  void setEditData(value) {
+    this.user['dataOnEdit'][this.group][this.name] = value;
   }
 
   void updateData(int? value) {
+    if (this.user['clearData'][this.name] == value) {
+      this.setEditData(false);
+    } else {
+      this.setEditData(value);
+    }
+
     setState(() {
       this.value = value;
       this.user[this.name] = this.value;

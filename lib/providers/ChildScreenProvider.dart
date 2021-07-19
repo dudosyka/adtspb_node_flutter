@@ -19,12 +19,18 @@ class ChildScreenProvider extends ChangeNotifier {
   }
 
   void updateChild(child) {
+    log(child.toString());
     this._children[child['_index']] = child;
     this.uploadChild(child);
   }
 
   void uploadChild(child) {
-    this.userModel.updateChild(child);
+    log(child['dataOnEdit']['main'].length.toString());
+    log(child['dataOnEdit']['extra'].length.toString());
+    if (child['dataOnEdit']['main'].length > 1)
+      this.userModel.updateMainData(child['dataOnEdit']['main']);
+    if (child['dataOnEdit']['extra'].length > 1)
+      this.userModel.updateExtraData(child['dataOnEdit']['extra']);
     this.notifyListeners();
   }
 }

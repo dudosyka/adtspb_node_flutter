@@ -19,12 +19,21 @@ class UserModel extends Model {
     return res["data"]['children'];
   }
 
-  Future<bool> updateChild(Map child) async {
+  Future<bool> updateMainData(Map data) async {
+    return await this.updateChild(data, "editMainData");
+  }
+
+  Future<bool> updateExtraData(Map data) async {
+    return await this.updateChild(data, "editExtraData");
+  }
+
+  Future<bool> updateChild(Map child, String dataType) async {
     log(child.toString());
     int id = int.parse(child['id']);
     Map<String, dynamic> childData = {};
 
     child.keys.forEach((index) {
+      if (index == "id") return;
       dynamic el = child[index];
       log(el.runtimeType.toString());
       if (index == '_index' || index == '_provider') return;
@@ -37,15 +46,18 @@ class UserModel extends Model {
           value.addAll({subindex: subEl});
         });
         childData.addAll({index: value});
-      } else {
+      } else if (el != false) {
         childData.addAll({index: el});
       }
     });
 
+    log("erer");
     log(childData.toString());
+    if (childData.length <= 0) return true;
 
-    String query =
-        "mutation (\$data: UserInput, \$target_id: Int) {user {editMainData(newData: \$data, target_id: \$target_id)}}";
+    String query = "mutation (\$data: UserInput, \$target_id: Int) {user {" +
+        dataType +
+        "(newData: \$data, target_id: \$target_id)}}";
     Object data = {
       "data": childData,
       "target_id": id,

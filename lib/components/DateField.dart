@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 // ignore: must_be_immutable
 class DateField extends StatefulWidget {
   dynamic user;
+  String group;
   String name;
   String label;
   Size size;
@@ -12,6 +13,7 @@ class DateField extends StatefulWidget {
 
   DateField({
     required this.user,
+    required this.group,
     required this.name,
     required this.size,
     required this.label,
@@ -21,23 +23,31 @@ class DateField extends StatefulWidget {
   DateTime firstDate = DateTime(2000, 01, 01);
   DateTime lastDate = DateTime.now();
 
-  DateFieldState createState() => DateFieldState(this.user, this.name,
-      this.label, this.size, this.onTap, this.firstDate, this.lastDate);
+  DateFieldState createState() => DateFieldState(
+      this.user,
+      this.group,
+      this.name,
+      this.label,
+      this.size,
+      this.onTap,
+      this.firstDate,
+      this.lastDate);
 }
 
 class DateFieldState extends State<DateField> {
   TextEditingController _controller = TextEditingController();
   dynamic user;
-  dynamic onTap;
+  String group;
   String name;
   String label;
   Size size;
   DateTime firstDate;
   DateTime lastDate;
   DateTime selectedDate = DateTime.now();
+  dynamic onTap;
 
-  DateFieldState(this.user, this.name, this.label, this.size, this.onTap,
-      this.firstDate, this.lastDate) {
+  DateFieldState(this.user, this.group, this.name, this.label, this.size,
+      this.onTap, this.firstDate, this.lastDate) {
     this.firstDate = this.timestampToDateTime();
     this.selectedDate = this.timestampToDateTime();
     this.unset();
@@ -88,12 +98,20 @@ class DateFieldState extends State<DateField> {
     return DateTime(year, month, day);
   }
 
+  void setEditData(value) {
+    this.user['dataOnEdit'][this.group][this.name] = value;
+  }
+
   void updateData() {
     DateTime dateTime =
         this.dateTimeFromString(this._controller.value.text.toString());
-    this.user[this.name] = dateTime.millisecondsSinceEpoch.toString();
-    // log(this.child[this.name]);
-    // this.child["_provider"].updateChild(this.child);
+    dynamic value = dateTime.millisecondsSinceEpoch.toString();
+    if (this.user['clearData'][this.name] == value) {
+      this.setEditData(false);
+    } else {
+      this.setEditData(value);
+    }
+    this.user[this.name] = value;
   }
 
   void _selectDate() async {

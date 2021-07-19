@@ -42,6 +42,15 @@ class ChildList extends StatelessWidget {
 
     int i = 0;
     childList.forEach((element) {
+      element['clearData'] = element;
+      element['dataOnEdit'] = {
+        'main': {
+          "id": element["id"],
+        },
+        'extra': {
+          "id": element["id"],
+        },
+      };
       element['_index'] = i;
       element['_provider'] = value;
       list.add(ChildCard(element, this.size));
