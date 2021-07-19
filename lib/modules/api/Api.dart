@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:adtspb/modules/Authorization.dart';
+
 abstract class Api {
   late String token;
   late HttpClient httpClient = new HttpClient();
@@ -35,6 +37,12 @@ abstract class Api {
     late Map reply;
     if (response.statusCode == 200) {
       reply = json.decode(await response.transform(utf8.decoder).join());
+      if (reply['message'] != null) {
+        if (reply['message'] == "refresh") {
+          dynamic auth = Authorization();
+          auth.logout();
+        }
+      }
       reply["data"] = reply["data"][name];
       reply["errors"] = reply["errors"] ?? {};
     } else {

@@ -41,6 +41,7 @@ class Authorization {
   }
 
   logout() {
+    log("12");
     this.storage.token = null;
   }
 }

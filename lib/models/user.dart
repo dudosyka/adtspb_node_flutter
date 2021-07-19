@@ -4,20 +4,19 @@ import 'model.dart';
 
 class UserModel extends Model {
   Future<Object?> getViewerData() async {
-    String query = "query { viewer { id, name, surname, lastname } }";
+    String query = "query { user { data { id, name, surname, lastname } } }";
     Object data = {};
-    dynamic res = await this.api.request(query, data, 'viewer');
-    // await Future.delayed(Duration(seconds: 2));
-    return res["data"];
+    dynamic res = await this.api.request(query, data, 'user');
+    return res["data"]['data'];
   }
 
   Future<Object?> getChildren() async {
     String query =
-        " query { getChildren {id, name, surname, lastname, phone, email, sex, birthday, state, studyPlace, residence_address, registration_address, ovz, ovz_type { id }, disability, disability_group { id } } }";
+        " query { user { children {id, name, surname, lastname, phone, email, sex, birthday, state, studyPlace, residence_address, registration_address, ovz, ovz_type { id }, disability, disability_group { id } } } }";
     Object data = {};
-    dynamic res = await this.api.request(query, data, 'getChildren');
+    dynamic res = await this.api.request(query, data, 'user');
     // log(res['data'].toString());
-    return res["data"];
+    return res["data"]['children'];
   }
 
   Future<bool> updateChild(Map child) async {
@@ -46,12 +45,12 @@ class UserModel extends Model {
     log(childData.toString());
 
     String query =
-        "mutation (\$data: UserInput, \$target_id: Int) {editMainUserData(newData: \$data, target_id: \$target_id)}";
+        "mutation (\$data: UserInput, \$target_id: Int) {user {editMainData(newData: \$data, target_id: \$target_id)}}";
     Object data = {
       "data": childData,
       "target_id": id,
     };
-    dynamic res = await this.api.request(query, data, "editMainUserData");
+    dynamic res = await this.api.request(query, data, "user");
     //Send request on update
     log(res.toString());
     return true;
